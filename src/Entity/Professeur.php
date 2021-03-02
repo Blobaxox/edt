@@ -32,6 +32,12 @@ class Professeur
      */
     private $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Avis::class, mappedBy=professeur)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Avis;
+
     public function getId(): ?int
     {
         return $this->id;

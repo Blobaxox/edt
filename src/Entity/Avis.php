@@ -32,6 +32,12 @@ class Avis
      */
     private $emailEtudiant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Professeur::class, inversedBy="avis")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $professeur;
+
     public function getId(): ?int
     {
         return $this->id;
