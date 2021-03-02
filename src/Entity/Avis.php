@@ -78,4 +78,16 @@ class Avis
 
         return $this;
     }
+
+    public function getProfesseur(): ?Professeur
+    {
+        return $this->professeur;
+    }
+
+    public function setProfesseur(?Professeur $professeur): self
+    {
+        $this->professeur = $professeur;
+
+        return $this;
+    }
 }

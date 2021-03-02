@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ProfesseurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass=ProfesseurRepository::class)
@@ -33,10 +35,24 @@ class Professeur
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity=Avis::class, mappedBy=professeur)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Avis::class, mappedBy="professeur")
      */
-    private $Avis;
+    private $avis;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Matiere::class, mappedBy="professeurs")
+     */
+    private $matieres;
+
+    public function __construct()
+    {
+        $this->matieres = new ArrayCollection();
+    }
+
+    public function construct()
+    {
+      $this->avis = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -72,5 +88,57 @@ class Professeur
       $this->email = $email;
       return $this;
     }
+
+    public function getAvis(): ArrayCollection
+    {
+      return $this->avis;
+    }
+
+    public function addAvis(Avis $avis): self
+    {
+      if(!$this->avis->contains($avis)){
+        $this->avis[] = $avis;
+        $avis->setProfesseur($this);
+      }
+      return $this;
+    }
+
+    public function removeAvis(Avis $avis): self
+    {
+      if ($this->avis->removeElement($avis)) {
+        if ($avis->getProfesseur() == $this) {
+          $avis->setProfesseur(null);
+        }
+      }
+      return $this;
+    }
+
+    /**
+     * @return Collection|Matiere[]
+     */
+    public function getMatieres(): Collection
+    {
+        return $this->matieres;
+    }
+
+    public function addMatiere(Matiere $matiere): self
+    {
+        if (!$this->matieres->contains($matiere)) {
+            $this->matieres[] = $matiere;
+            $matiere->addProfesseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatiere(Matiere $matiere): self
+    {
+        if ($this->matieres->removeElement($matiere)) {
+            $matiere->removeProfesseur($this);
+        }
+
+        return $this;
+    }
+
 
 }
