@@ -6,6 +6,7 @@ use App\Repository\ProfesseurRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProfesseurRepository::class)
@@ -31,6 +32,8 @@ class Professeur
 
     /**
      * @ORM\Column(type="string",unique=true,length=255)
+     * @Assert\Email()
+     * @Assert\NotBlank()
      */
     private $email;
 

@@ -1,0 +1,11 @@
+<div class="professeurs">
+  <table>
+    {% for professeur in professeurs %}
+      <tr>
+        <td>{{ professeur.getNom() }}</td>
+        <td>{{ professeur.getPrenom() }}</td>
+        <td>{{ professeur.getEmail() }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
