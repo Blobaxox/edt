@@ -6,9 +6,11 @@ use App\Repository\MatiereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=MatiereRepository::class)
+ * @UniqueEntity("reference")
  */
 class Matiere
 {
@@ -37,6 +39,11 @@ class Matiere
     public function __construct()
     {
         $this->professeurs = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return sprintf('%s (%s)', $this->titre, $this->reference);
     }
 
     public function getId(): ?int

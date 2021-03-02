@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AvisRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AvisRepository::class)
@@ -19,6 +20,7 @@ class Avis
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Range(min=0, max=5)
      */
     private $note;
 
@@ -29,6 +31,7 @@ class Avis
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
      */
     private $emailEtudiant;
 

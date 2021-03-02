@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Professeur;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ProfesseurCrudController extends AbstractCrudController
 {
@@ -12,14 +13,17 @@ class ProfesseurCrudController extends AbstractCrudController
         return Professeur::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            'prenom',
+            'nom',
+            'email',
+            AssociationField::new('matieres')
+              ->setFormTypeOptions([
+                'by_reference' => false,
+              ]),
         ];
     }
-    */
+
 }

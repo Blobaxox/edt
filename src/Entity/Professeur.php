@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ProfesseurRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -23,19 +23,20 @@ class Professeur
     private $id;
 
     /**
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="string",unique=true,length=255)
+     * @ORM\Column(type="string", unique=true, length=255)
      * @Assert\Email()
-     * @Assert\NotBlank()
      */
     private $email;
 
@@ -51,12 +52,13 @@ class Professeur
 
     public function __construct()
     {
+        $this->avis = new ArrayCollection();
         $this->matieres = new ArrayCollection();
     }
 
-    public function construct()
+    public function __toString()
     {
-      $this->avis = new ArrayCollection();
+        return sprintf('%s %s', $this->prenom, $this->nom);
     }
 
     public function getId(): ?int
@@ -68,54 +70,63 @@ class Professeur
     {
         return $this->nom;
     }
+
     public function setNom(string $nom): self
     {
-      $this->nom = $nom;
-      return $this;
+        $this->nom = $nom;
+
+        return $this;
     }
 
     public function getPrenom(): ?string
     {
         return $this->prenom;
     }
+
     public function setPrenom(string $prenom): self
     {
-      $this->prenom = $prenom;
-      return $this;
+        $this->prenom = $prenom;
+
+        return $this;
     }
 
     public function getEmail(): ?string
     {
         return $this->email;
     }
+
     public function setEmail(string $email): self
     {
-      $this->email = $email;
-      return $this;
+        $this->email = $email;
+
+        return $this;
     }
 
     public function getAvis(): ArrayCollection
     {
-      return $this->avis;
+        return $this->avis;
     }
 
     public function addAvis(Avis $avis): self
     {
-      if(!$this->avis->contains($avis)){
-        $this->avis[] = $avis;
-        $avis->setProfesseur($this);
-      }
-      return $this;
+        if (!$this->avis->contains($avis)) {
+            $this->avis[] = $avis;
+            $avis->setProfesseur($this);
+        }
+
+        return $this;
     }
 
     public function removeAvis(Avis $avis): self
     {
-      if ($this->avis->removeElement($avis)) {
-        if ($avis->getProfesseur() == $this) {
-          $avis->setProfesseur(null);
+        if ($this->avis->removeElement($avis)) {
+            // set the owning side to null (unless already changed)
+            if ($avis->getProfesseur() === $this) {
+                $avis->setProfesseur(null);
+            }
         }
-      }
-      return $this;
+
+        return $this;
     }
 
     /**
@@ -144,6 +155,4 @@ class Professeur
 
         return $this;
     }
-
-
 }
