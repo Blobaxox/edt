@@ -39,6 +39,8 @@ class ProfesseurController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($professeur);
         $em->flush();
+
+        return $this->redirectToRoute("professeurs_index");
       }
 
       return $this->render('professeur/create.html.twig',[
@@ -46,17 +48,35 @@ class ProfesseurController extends AbstractController
      ]);
     }
     /**
-     * @Route("/update", name="update", methods={"GET", "POST"})
+     * @Route("/update/{id}", name="update", methods={"GET", "POST"})
      */
-    public function update()
+    public function update(Professeur $professeur,ProfesseurRepository $repository,Request $request): Response
     {
+      $form = $this->createForm(ProfesseurType::class,$professeur);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        $professeur = $form->getData();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($professeur);
+        $em->flush();
+
+        return $this->redirectToRoute("professeurs_index");
+      }
+
+      return $this->render('professeur/create.html.twig',[
+        'form' => $form->createView(),
+     ]);
 
     }
     /**
-     * @Route("/delete", name="delete", methods={"GET"})
+     * @Route("/delete/{id}", name="delete", methods={"GET"})
      */
-    public function delete()
+    public function delete(Professeur $professeur): Response
     {
+      $em = $this->getDoctrine()->getManager();
+      $em->remove($professeur);
+      $em->flush();
 
+      return $this->redirectToRoute("professeurs_index");
     }
 }
