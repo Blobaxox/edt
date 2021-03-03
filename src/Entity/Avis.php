@@ -28,25 +28,37 @@ class Avis implements JsonSerializable
     /**
      * @ORM\Column(type="smallint")
      * @Assert\Range(min=0, max=5)
+     * @Assert\NotBlank()
      */
     private $note;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $commentaire;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email()
+     * @Assert\NotBlank()
      */
     private $emailEtudiant;
 
     /**
      * @ORM\ManyToOne(targetEntity=Professeur::class, inversedBy="avis")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $professeur;
+
+    public function __construct(array $data=[])
+    {
+      $this->note = $data['note'] ?? null;
+      $this->commentaire = $data['commentaire'] ?? null;
+      $this->emailEtudiant = $data['emailEtudiant'] ?? null;
+      $this->professeur = $data['professeur'] ?? null;
+    }
 
     public function jsonSerialize()
     {
