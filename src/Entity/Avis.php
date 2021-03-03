@@ -5,11 +5,18 @@ namespace App\Entity;
 use App\Repository\AvisRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass=AvisRepository::class)
+ * @UniqueEntity(
+ *     fields={"professeur", "emailEtudiant"},
+ *     errorPath="emailEtudiant",
+ *     message="Cet etudiant a déjà noté ce professeur."
+ * )
  */
-class Avis
+class Avis implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -40,6 +47,16 @@ class Avis
      * @ORM\JoinColumn(nullable=false)
      */
     private $professeur;
+
+    public function jsonSerialize()
+    {
+      return [
+        'id' => $this->id,
+        'note' => $this->note,
+        'commentaire' => $this->commentaire,
+        'emailEtudiant' => $this->emailEtudiant,
+      ];
+    }
 
     public function getId(): ?int
     {

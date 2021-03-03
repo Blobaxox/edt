@@ -8,12 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass=ProfesseurRepository::class)
  * @UniqueEntity("email")
  */
-class Professeur
+class Professeur implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -61,6 +62,17 @@ class Professeur
         return sprintf('%s %s', $this->prenom, $this->nom);
     }
 
+    public function jsonSerialize()
+    {
+      return [
+        'id' => $this->id,
+        'nom' => $this->nom,
+        'prenom' => $this->prenom,
+        'email' => $this->email,
+        'matieres' => $this->matieres->toArray(),
+      ];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,7 +114,7 @@ class Professeur
         return $this;
     }
 
-    public function getAvis(): ArrayCollection
+    public function getAvis(): Collection
     {
         return $this->avis;
     }
