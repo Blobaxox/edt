@@ -111,6 +111,41 @@ class ProfesseurController extends AbstractController
       return $this->json(null,204);
     }
 
+    /**
+     * @Route("/avis/{id}", name="update_avis", methods={"PATCH"})
+     */
+    public function updateAvis(Avis $avis = null,ValidatorInterface $validator,EntityManagerInterface $em,Request $request): JsonResponse
+    {
+      if (is_null($avis)){
+        return $this->json([
+          'message' => 'Tu ne le sais pas encore, mais cet avis est déjà mort',
+          'illustration' => 'https://media.tenor.com/images/ab89c542710a01a2f8467952b76945c6/tenor.gif',
+          ], 404);
+      }
+
+      $data = json_decode($request->getContent(),true);
+      $errors = $avis->updateFromArray($data);
+
+      if (count($errors)>0) {
+        $message = [];
+        foreach ($errors as $attribute) {
+          $message[$attribute] = "nowhere to be found";
+        }
+        return $this->json($message,400);
+      }
+
+      $errors = $validator->validate($avis);
+
+      if($errors->count() > 0){
+        return $this->json($this->formatErrors($errors),400);
+      }
+      
+      $em->persist($avis);
+      $em->flush();
+
+      return $this->json($avis,200);
+    }
+
     protected function formatErrors($errors)
     {
       $message = [];

@@ -18,6 +18,7 @@ use JsonSerializable;
  */
 class Avis implements JsonSerializable
 {
+  use Updatable;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -59,6 +60,8 @@ class Avis implements JsonSerializable
       $this->emailEtudiant = $data['emailEtudiant'] ?? null;
       $this->professeur = $data['professeur'] ?? null;
     }
+
+
 
     public function jsonSerialize()
     {
