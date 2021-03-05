@@ -13,22 +13,31 @@
           <div class="row">
             <div class="col-6" v-for="professeur in professeurs">
               <div class="card">
-                <div class="card-body">
+                <div class="card-body" :class="{'bg-light': professeur.id === professeurCourant?.id}">
                   <h5 class="card-title">{{ professeur.prenom + ' ' + professeur.nom }}</h5>
                   <p class="card-text">
                     {{ professeur.email }}<br/>
                     <span v-for="matiere in professeur.matieres">
-                      {{ matiere.titre }} ({{ matiere.reference }}),
+                      {{ matiere.titre }} ({{ matiere.reference }})<br>
                     </span><br>
-                    <button class="btn btn-primary">Afficher les avis</button>
+                    <button v-on:click="getAvis(professeur)" :disabled="professeur.id === professeurCourant?.id"  class="btn btn-primary mt-3">Afficher les avis</button>
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-4">
-
+        <div v-if="professeurCourant" class="col-4">
+          <h2>Avis sur {{ professeurCourant.prenom + ' ' + professeurCourant.nom }}</h2>
+          <div class="card mt-1" v-for="unAvis in avis">
+            <div class="card-body">
+              <h5 class="card-title">Note : {{unAvis.note}} / 5</h5>
+              <p class="card-text">
+                <i>commentaire de {{unAvis.emailEtudiant}}</i><br>
+                {{unAvis.commentaire}}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -39,17 +48,30 @@
         el: '#app',
 
         data: {
-          professeurs: []
+          apiBase: 'http://localhost:8080/api',
+          professeurs: [],
+          professeurCourant: null,
+          avis: [],
         },
 
         methods: {
-          getProfesseurs: function(){
-            axios.get('http://localhost:8080/api/professeurs')
+          getProfesseurs: function (){
+            axios.get(this.apiBase + '/professeurs')
               .then(response => {
                 this.professeurs = response.data
               })
               .catch(error => {
                 console.log(error)
+              })
+          },
+          getAvis: function (professeur){
+            axios.get(this.apiBase + '/professeurs/' + professeur.id + '/avis')
+              .then(response =>{
+                this.avis = response.data
+                this.professeurCourant = professeur
+              })
+              .catch(error =>{
+                console.log(error);
               })
           }
         },
