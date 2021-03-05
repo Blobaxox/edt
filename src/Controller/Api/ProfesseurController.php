@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @Route("/api/professeur", name="api_professeur_")
+ * @Route("/api/professeurs", name="api_professeurs_")
  */
 class ProfesseurController extends AbstractController
 {
@@ -139,7 +139,7 @@ class ProfesseurController extends AbstractController
       if($errors->count() > 0){
         return $this->json($this->formatErrors($errors),400);
       }
-      
+
       $em->persist($avis);
       $em->flush();
 
