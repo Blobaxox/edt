@@ -1,84 +1,171 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
+<html>
+<head>
     <title>Note ton prof !</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-  </head>
-  <body>
+</head>
+<body>
+
     <div id="app" class="container">
-      <div class="row">
-        <div class="col-8">
-          <h1>Note ton prof !</h1>
-          <div class="row">
-            <div class="col-6" v-for="professeur in professeurs">
-              <div class="card">
-                <div class="card-body" :class="{'bg-light': professeur.id === professeurCourant?.id}">
-                  <h5 class="card-title">{{ professeur.prenom + ' ' + professeur.nom }}</h5>
-                  <p class="card-text">
-                    {{ professeur.email }}<br/>
-                    <span v-for="matiere in professeur.matieres">
-                      {{ matiere.titre }} ({{ matiere.reference }})<br>
-                    </span><br>
-                    <button v-on:click="getAvis(professeur)" :disabled="professeur.id === professeurCourant?.id"  class="btn btn-primary mt-3">Afficher les avis</button>
-                  </p>
+        <div class="row">
+            <div class="col-8">
+                <h1>Note ton prof !</h1>
+
+                <div class="row">
+                    <div class="col-6" v-for="professeur in professeurs">
+                        <div class="card">
+                            <div class="card-body" :class="{'bg-light': professeur.id === professeurCourant?.id}">
+                                <h5 class="card-title">{{ professeur.prenom + ' ' + professeur.nom }}</h5>
+
+                                <p class="card-text">
+                                    {{ professeur.email }}<br/>
+
+                                    <span v-for="matiere in professeur.matieres">
+                                        {{ matiere.titre }} ({{ matiere.reference }}),
+                                    </span>
+
+                                    <button v-on:click="getAvis(professeur)" :disabled="professeur.id === professeurCourant?.id" class="btn btn-primary mt-3">Afficher les avis</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <div v-if="professeurCourant" class="col-4">
-          <h2>Avis sur {{ professeurCourant.prenom + ' ' + professeurCourant.nom }}</h2>
-          <div class="card mt-1" v-for="unAvis in avis">
-            <div class="card-body">
-              <h5 class="card-title">Note : {{unAvis.note}} / 5</h5>
-              <p class="card-text">
-                <i>commentaire de {{unAvis.emailEtudiant}}</i><br>
-                {{unAvis.commentaire}}
-              </p>
+
+            <div v-if="professeurCourant" class="col-4">
+                <h2>Avis concernant {{ professeurCourant.prenom + ' ' + professeurCourant.nom }}</h2>
+
+                <form v-on:submit.prevent="postAvis()" class="mb-5">
+                    <div class="form-group">
+                        <label>Note</label>
+                        <select class="form-control" v-model="nouvelAvis.note">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Commentaire</label>
+                        <textarea class="form-control" v-model="nouvelAvis.commentaire" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Adresse email</label>
+                        <input type="email" class="form-control" v-model="nouvelAvis.emailEtudiant" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Ajouter un avis">
+                    </div>
+                </form>
+
+                <ul class="text-danger">
+                   <li v-for="error in errors">{{ error }}</li>
+                </ul>
+
+                <div class="card mt-1" v-for="unAvis in avis">
+                    <div class="card-body">
+                        <h5 class="card-title">Note: {{ unAvis.note }} / 5</h5>
+                        <p class="card-text">
+                            <i>Commentaire de {{ unAvis.emailEtudiant }}</i>
+                            <br/>
+                            {{ unAvis.commentaire }}
+                            <br/>
+
+                            <button v-if="mesAvis.includes(unAvis)" v-on:click="deleteAvis(unAvis)" class="btn btn-danger mt-5">Supprimer</button>
+                        </p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="text/javascript">
-      var app = new Vue({
-        el: '#app',
 
-        data: {
-          apiBase: 'http://localhost:8080/api',
-          professeurs: [],
-          professeurCourant: null,
-          avis: [],
-        },
+    <script>
+        var app = new Vue({
+            el: '#app',
 
-        methods: {
-          getProfesseurs: function (){
-            axios.get(this.apiBase + '/professeurs')
-              .then(response => {
-                this.professeurs = response.data
-              })
-              .catch(error => {
-                console.log(error)
-              })
-          },
-          getAvis: function (professeur){
-            axios.get(this.apiBase + '/professeurs/' + professeur.id + '/avis')
-              .then(response =>{
-                this.avis = response.data
-                this.professeurCourant = professeur
-              })
-              .catch(error =>{
-                console.log(error);
-              })
-          }
-        },
-        mounted(){
-          this.getProfesseurs()
-        }
-      });
+            data: {
+                apiBase: 'http://localhost:8080/api',
+                professeurs: [],
+                professeurCourant: null,
+                avis: [],
+                nouvelAvis: {},
+                errors: [],
+                mesAvis: []
+            },
+
+            methods: {
+                getProfesseurs: function () {
+                    axios.get(this.apiBase + '/professeurs')
+                        .then(response => {
+                            this.professeurs = response.data
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                },
+
+                newAvis: function () {
+                    return {
+                        note: 0,
+                        commentaire: '',
+                        emailEtudiant: ''
+                    }
+                },
+
+                getAvis: function (professeur) {
+                    this.nouvelAvis = this.newAvis()
+                    this.errors = []
+
+                    axios.get(this.apiBase + '/professeurs/' + professeur.id + '/avis')
+                        .then(response => {
+                            this.avis = response.data
+                            this.professeurCourant = professeur
+                            // this.professeurCourant = this.professeurs.find(professeur => professeur.id === professeurId)
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                },
+
+                postAvis: function () {
+                    this.errors = []
+
+                    axios.post(this.apiBase + '/professeurs/' + this.professeurCourant.id + '/avis', this.nouvelAvis)
+                        .then(response => {
+                            this.avis.push(response.data)
+                            this.nouvelAvis = this.newAvis()
+                            this.mesAvis.push(response.data)
+                        })
+                        .catch(error => {
+                            this.errors = Object.values(error.response.data)
+                        })
+                },
+
+                deleteAvis: function (avis) {
+                    axios.delete(this.apiBase + '/professeurs/avis/' + avis.id)
+                        .then(response => {
+                            this.avis.splice(this.avis.indexOf(avis), 1)
+                            this.mesAvis.splice(this.mesAvis.indexOf(avis), 1)
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                }
+            },
+
+            mounted() {
+                this.getProfesseurs()
+            }
+        })
     </script>
-  </body>
+</body>
 </html>
