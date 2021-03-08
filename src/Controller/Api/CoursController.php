@@ -35,5 +35,6 @@ class CoursController extends AbstractController
 
       return $this->json($cours);
     }
+  
 
 }

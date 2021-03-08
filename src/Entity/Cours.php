@@ -48,6 +48,7 @@ class Cours implements JsonSerializable
      */
     private $salle;
 
+
     public function __toString()
     {
         return sprintf('%s', $this->type);
@@ -60,6 +61,7 @@ class Cours implements JsonSerializable
         'type' => $this->type,
         'dateHeureDebut' => $this->dateHeureDebut,
         'dateHeureFin' => $this->dateHeureFin,
+        'week' => $this->getWeek(),
         'professeur' => $this->professeur,
         'matiere' => $this->matiere,
         'salle' => $this->salle,
@@ -79,7 +81,6 @@ class Cours implements JsonSerializable
     public function setDateHeureDebut(\DateTimeInterface $dateHeureDebut): self
     {
         $this->dateHeureDebut = $dateHeureDebut;
-
         return $this;
     }
 
@@ -91,7 +92,6 @@ class Cours implements JsonSerializable
     public function setDateHeureFin(\DateTimeInterface $dateHeureFin): self
     {
         $this->dateHeureFin = $dateHeureFin;
-
         return $this;
     }
 
@@ -142,4 +142,10 @@ class Cours implements JsonSerializable
 
         return $this;
     }
+
+    public function getWeek(){
+      //return date("W",$this->dateHeureDebut);
+      return "vas te faire";
+    }
+
 }
