@@ -25,7 +25,6 @@ class Cours
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\
      */
     private $dateHeureFin;
 
@@ -51,7 +50,7 @@ class Cours
 
     public function __toString()
     {
-        return sprintf('%s (%s)', $this->type);
+        return sprintf('%s', $this->type);
     }
 
     public function getId(): ?int
