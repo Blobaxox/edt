@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Professeur;
 use App\Entity\Avis;
 use App\Entity\Matiere;
+use App\Entity\Cours;
+use App\Entity\Salle;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -34,6 +36,8 @@ class DashboardController extends AbstractDashboardController
         MenuItem::linktoCrud('Professeur', 'fas fa-chalkboard-teacher', Professeur::class),
         MenuItem::linktoCrud('Matiere', 'fas fa-book-open', Matiere::class),
         MenuItem::linktoCrud('Avis', 'fas fa-star', Avis::class),
+        MenuItem::linktoCrud('Cours', 'fa-chalkboard-teacher', Cours::class),
+        MenuItem::linktoCrud('Salle', 'fas fa-star', Salle::class),
       ];
     }
 }
