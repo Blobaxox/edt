@@ -14,12 +14,12 @@ use App\Entity\Salle;
 class SalleController extends AbstractController
 {
   /**
-   * @Route("", name="index")
+   * @Route("", name="index", methods={"GET"})
    */
-    public function index(SalleRepository $repository): Response
+    public function index(SalleRepository $repository): JsonResponse
     {
-        $salle =$repository->findAll();
-        return $this->json($salle);
+        $salles =$repository->findAll();
+        return $this->json($salles);
     }
 
     /**
