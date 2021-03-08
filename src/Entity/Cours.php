@@ -35,17 +35,17 @@ class Cours
     /**
      * @ORM\ManyToOne(targetEntity=Professeur::class, inversedBy="cours")
      */
-    private $idProfesseur;
+    private $professeur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Matiere::class, inversedBy="cours")
      */
-    private $idMatiere;
+    private $matiere;
 
     /**
      * @ORM\ManyToOne(targetEntity=Salle::class, inversedBy="cours")
      */
-    private $idSalle;
+    private $salle;
 
     public function getId(): ?int
     {
@@ -88,38 +88,38 @@ class Cours
         return $this;
     }
 
-    public function getIdProfesseur(): ?Professeur
+    public function getProfesseur(): ?Professeur
     {
-        return $this->idProfesseur;
+        return $this->professeur;
     }
 
-    public function setIdProfesseur(?Professeur $idProfesseur): self
+    public function setProfesseur(?Professeur $professeur): self
     {
-        $this->idProfesseur = $idProfesseur;
+        $this->professeur = $professeur;
 
         return $this;
     }
 
-    public function getIdMatiere(): ?Matiere
+    public function getMatiere(): ?Matiere
     {
-        return $this->idMatiere;
+        return $this->matiere;
     }
 
-    public function setIdMatiere(?Matiere $idMatiere): self
+    public function setMatiere(?Matiere $matiere): self
     {
-        $this->idMatiere = $idMatiere;
+        $this->matiere = $matiere;
 
         return $this;
     }
 
-    public function getIdSalle(): ?Salle
+    public function getSalle(): ?Salle
     {
-        return $this->idSalle;
+        return $this->salle;
     }
 
-    public function setIdSalle(?Salle $idSalle): self
+    public function setSalle(?Salle $salle): self
     {
-        $this->idSalle = $idSalle;
+        $this->salle = $salle;
 
         return $this;
     }
