@@ -20,6 +20,7 @@ class CoursCrudController extends AbstractCrudController
         return [
             DateTimeField::new('dateHeureDebut')->renderAsChoice(),
             DateTimeField::new('dateHeureFin')->renderAsChoice(),
+            'type',
             AssociationField::new('professeur'),
             AssociationField::new('matiere'),
             AssociationField::new('salle'),

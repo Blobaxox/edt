@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CoursRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CoursRepository::class)
@@ -24,6 +25,7 @@ class Cours
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\
      */
     private $dateHeureFin;
 
@@ -46,6 +48,11 @@ class Cours
      * @ORM\ManyToOne(targetEntity=Salle::class, inversedBy="cours")
      */
     private $salle;
+
+    public function __toString()
+    {
+        return sprintf('%s (%s)', $this->titre, $this->reference);
+    }
 
     public function getId(): ?int
     {
