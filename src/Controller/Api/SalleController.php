@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SalleRepository;
 use App\Entity\Salle;
 /**
- * @Route("/api/salle", name="api_salle_")
+ * @Route("/api/salles", name="api_salles_")
  */
 class SalleController extends AbstractController
 {
