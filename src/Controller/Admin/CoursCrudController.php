@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Cours;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class CoursCrudController extends AbstractCrudController
 {
