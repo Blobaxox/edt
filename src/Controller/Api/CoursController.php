@@ -24,8 +24,16 @@ class CoursController extends AbstractController
     /**
      * @Route("/{id}", name="show", methods={"GET"})
      */
-    public function show(CoursRepository $repository): JsonResponse
+    public function show(Cours $cours = null): JsonResponse
     {
+      if (is_null($cours)){
+        return $this->json([
+          'message' => 'Tu ne le sais pas encore, mais ce cours est déjà mort',
+          'illustration' => 'https://media.tenor.com/images/ab89c542710a01a2f8467952b76945c6/tenor.gif',
+        ], 404);
+      }
+
+      return $this->json($cours);
     }
 
 }
