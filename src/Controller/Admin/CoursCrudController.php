@@ -13,16 +13,16 @@ class CoursCrudController extends AbstractCrudController
         return Cours::class;
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            'dateHeureDebut',
-            'dateHeureFin',
+            DateTimeField::new('dateHeureDebut'),
+            DateTimeField::new('dateHeureFin'),
             AssociationField::new('professeur'),
             AssociationField::new('matiere'),
             AssociationField::new('salle'),
         ];
     }
-    
+
 }
