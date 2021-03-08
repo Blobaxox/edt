@@ -20,6 +20,7 @@ class MatiereCrudController extends AbstractCrudController
           'titre',
           'reference',
           AssociationField::new('professeurs'),
+          AssociationField::new('cours'),
       ];
     }
 
