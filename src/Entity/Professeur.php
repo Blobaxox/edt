@@ -52,7 +52,7 @@ class Professeur implements JsonSerializable
     private $matieres;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="idProfesseur")
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="professeur")
      */
     private $cours;
 
@@ -186,7 +186,7 @@ class Professeur implements JsonSerializable
     {
         if (!$this->cours->contains($cour)) {
             $this->cours[] = $cour;
-            $cour->setIdProfesseur($this);
+            $cour->setProfesseur($this);
         }
 
         return $this;
@@ -196,8 +196,8 @@ class Professeur implements JsonSerializable
     {
         if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getIdProfesseur() === $this) {
-                $cour->setIdProfesseur(null);
+            if ($cour->getProfesseur() === $this) {
+                $cour->setProfesseur(null);
             }
         }
 

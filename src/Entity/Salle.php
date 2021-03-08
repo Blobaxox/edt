@@ -25,7 +25,7 @@ class Salle
     private $numero;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="idSalle")
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="salle")
      */
     private $cours;
 
@@ -63,7 +63,7 @@ class Salle
     {
         if (!$this->cours->contains($cour)) {
             $this->cours[] = $cour;
-            $cour->setIdSalle($this);
+            $cour->setSalle($this);
         }
 
         return $this;
@@ -73,8 +73,8 @@ class Salle
     {
         if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getIdSalle() === $this) {
-                $cour->setIdSalle(null);
+            if ($cour->getSalle() === $this) {
+                $cour->setSalle(null);
             }
         }
 
