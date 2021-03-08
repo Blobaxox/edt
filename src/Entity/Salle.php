@@ -6,11 +6,11 @@ use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use JsonSerializable;
 /**
  * @ORM\Entity(repositoryClass=SalleRepository::class)
  */
-class Salle
+class Salle implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -37,6 +37,14 @@ class Salle
     public function __toString()
     {
         return sprintf('%s', $this->numero);
+    }
+
+    public function jsonSerialize()
+    {
+      return [
+        'id' => $this->id,
+        'numero' => $this->numero,
+      ];
     }
 
     public function getId(): ?int

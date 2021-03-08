@@ -5,11 +5,11 @@ namespace App\Entity;
 use App\Repository\CoursRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use JsonSerializable;
 /**
  * @ORM\Entity(repositoryClass=CoursRepository::class)
  */
-class Cours
+class Cours implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -51,6 +51,19 @@ class Cours
     public function __toString()
     {
         return sprintf('%s', $this->type);
+    }
+
+    public function jsonSerialize()
+    {
+      return [
+        'id' => $this->id,
+        'type' => $this->type,
+        'dateHeureDebut' => $this->dateHeureDebut,
+        'dateHeureFin' => $this->dateHeureFin,
+        'professeur' => $this->professeur,
+        'matiere' => $this->matiere,
+        'salle' => $this->salle,
+      ];
     }
 
     public function getId(): ?int
