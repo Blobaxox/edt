@@ -36,7 +36,7 @@ class Salle
 
     public function __toString()
     {
-        return sprintf('%s (%s)', $this->titre, $this->reference);
+        return sprintf('%s (%s)', $this->numero);
     }
 
     public function getId(): ?int

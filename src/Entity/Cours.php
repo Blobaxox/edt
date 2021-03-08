@@ -51,7 +51,7 @@ class Cours
 
     public function __toString()
     {
-        return sprintf('%s (%s)', $this->titre, $this->reference);
+        return sprintf('%s (%s)', $this->type);
     }
 
     public function getId(): ?int
