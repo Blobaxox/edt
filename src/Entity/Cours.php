@@ -25,6 +25,8 @@ class Cours
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="dateHeureDebut", 
+     * message="La date de fin ne peut pas être inférieure à la date de début")
      */
     private $dateHeureFin;
 
