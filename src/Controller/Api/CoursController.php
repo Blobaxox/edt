@@ -42,7 +42,8 @@ class CoursController extends AbstractController
     public function getCoursByDay(CoursRepository $repository, int $day) : JsonResponse
     {
       $cours = $repository->findBy(
-        ['dayNumber' => $day]
+        ['dayNumber' => $day],
+        ['dateHeureDebut' => 'ASC']
       );
       return $this->json($cours);
 

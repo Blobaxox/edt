@@ -19,7 +19,7 @@ use JsonSerializable;
  *      errorPath="salle",
  *      message="Cette salle est déjà prise à cette heure-ci."
  * )
- * 
+ *
  */
 class Cours implements JsonSerializable
 {
@@ -84,6 +84,9 @@ class Cours implements JsonSerializable
         'id' => $this->id,
         'type' => $this->type,
         'dateHeureDebut' => $this->dateHeureDebut,
+        'heureDebut' => $this->getHeureDebut(),
+        'heureFin' => $this->getHeureFin(),
+        'date' => $this->getDate(),
         'dateHeureFin' => $this->dateHeureFin,
         'weekNumber' => $this->weekNumber,
         'dayNumber' => $this->dayNumber,
@@ -177,5 +180,18 @@ class Cours implements JsonSerializable
     public function getDay(){
       return $this->dateHeureDebut->format('z');
     }
+
+    public function getHeureDebut(){
+      return $this->dateHeureDebut->format('H:i');
+    }
+
+    public function getHeureFin(){
+      return $this->dateHeureFin->format('H:i');
+    }
+
+    public function getDate(){
+      return $this->dateHeureFin->format('Y-m-d');
+    }
+
 
 }

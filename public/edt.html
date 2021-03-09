@@ -9,17 +9,17 @@
   <body>
     <div id="app" class="container">
       <div class="row">
-        <div class="col-3" v-for="i in 1..5">
+        <div class="col-4">
           <div class="card" v-for="cour in cours">
             <div class="card-body">
-              <h5 class="card-title">{{ cour.matiere.titre }}</h5>
+              <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
               <p class="card-body">
+                <b>{{cour.heureDebut + ' - ' + cour.heureFin }}</b> <br>
                 <i>
-                  {{cour.type}} <br>
+                  Type : {{cour.type}} <br>
                   Salle : {{cour.salle.numero}} <br>
                   Professeur : {{cour.professeur.prenom + ' ' + cour.professeur.nom}}
                 </i>
-
               </p>
             </div>
           </div>
@@ -29,6 +29,16 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
+
+    function getDayOfTheYear() {
+      var now = new Date();
+      var start = new Date(now.getFullYear(), 0, 0);
+      var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+      var oneDay = 1000 * 60 * 60 * 24;
+      var day = Math.floor(diff / oneDay);
+      return day;
+    }
+
       var app = new Vue({
         el: '#app',
 
@@ -39,7 +49,8 @@
 
         methods: {
           getCours: function() {
-            axios.get(this.apiBase + '/cours')
+            var day = getDayOfTheYear()-1;
+            axios.get(this.apiBase + '/cours/day/' + day)
               .then(response => {
                 this.cours = response.data
               })

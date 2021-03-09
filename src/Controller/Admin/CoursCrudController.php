@@ -18,8 +18,8 @@ class CoursCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            DateTimeField::new('dateHeureDebut')->renderAsChoice(),
-            DateTimeField::new('dateHeureFin')->renderAsChoice(),
+            DateTimeField::new('dateHeureDebut'),
+            DateTimeField::new('dateHeureFin'),
             'type',
             AssociationField::new('professeur'),
             AssociationField::new('matiere'),

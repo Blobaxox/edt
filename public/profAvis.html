@@ -7,9 +7,30 @@
 </head>
 <body>
 
-    <div id="app" class="container">
-        <div class="row">
-            <div class="col-8">
+    <div id="app">
+          <div class="row">
+            <div class="col-3">
+              <h1>Emploi du temps</h1>
+              <button  class="btn btn-primary mt-1"> << </button>
+              <h3>{{cours[0].date}}</h3>
+              <button  class="btn btn-primary mt-1"> >> </button>
+
+              <div class="card" v-for="cour in cours">
+                <div class="card-body">
+                  <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
+                  <p class="card-body">
+                    <b>{{cour.heureDebut + ' - ' + cour.heureFin }}</b> <br>
+                    <i>
+                      Type : {{cour.type}} <br>
+                      Salle : {{cour.salle.numero}} <br>
+                      Professeur : {{cour.professeur.prenom + ' ' + cour.professeur.nom}}
+                    </i>
+                  </p>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
                 <h1>Note ton prof !</h1>
 
                 <div class="row">
@@ -24,6 +45,7 @@
                                     <span v-for="matiere in professeur.matieres">
                                         {{ matiere.titre }} ({{ matiere.reference }}),
                                     </span>
+                                    <br>
 
                                     <button v-on:click="getAvis(professeur)" :disabled="professeur.id === professeurCourant?.id" class="btn btn-primary mt-3">Afficher les avis</button>
                                 </p>
@@ -33,7 +55,7 @@
                 </div>
             </div>
 
-            <div v-if="professeurCourant" class="col-4">
+            <div v-if="professeurCourant" class="col-3">
                 <h2>Avis concernant {{ professeurCourant.prenom + ' ' + professeurCourant.nom }}</h2>
 
                 <form v-on:submit.prevent="postAvis()" class="mb-5">
@@ -89,6 +111,15 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+    function getDayOfTheYear() {
+      var now = new Date();
+      var start = new Date(now.getFullYear(), 0, 0);
+      var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+      var oneDay = 1000 * 60 * 60 * 24;
+      var day = Math.floor(diff / oneDay);
+      return day;
+    }
+
         var app = new Vue({
             el: '#app',
 
@@ -99,7 +130,8 @@
                 avis: [],
                 nouvelAvis: {},
                 errors: [],
-                mesAvis: []
+                mesAvis: [],
+                cours: [],
             },
 
             methods: {
@@ -159,11 +191,22 @@
                         .catch(error => {
                             console.log(error)
                         })
+                },
+                getCours: function() {
+                  var day = getDayOfTheYear()-1;
+                  axios.get(this.apiBase + '/cours/day/' + day)
+                    .then(response => {
+                      this.cours = response.data
+                    })
+                    .catch(error => {
+                      console.log(error)
+                    })
                 }
             },
 
             mounted() {
                 this.getProfesseurs()
+                this.getCours()
             }
         })
     </script>
