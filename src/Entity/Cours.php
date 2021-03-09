@@ -5,9 +5,21 @@ namespace App\Entity;
 use App\Repository\CoursRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JsonSerializable;
 /**
  * @ORM\Entity(repositoryClass=CoursRepository::class)
+ * @UniqueEntity(
+ *      fields={"professeur", "dateHeureDebut"},
+ *      errorPath="dateHeureDebut",
+ *      message="Ce professeur a déjà un cours prévu à cette heure-ci."
+ * )
+ * @UniqueEntity(
+ *      fields={"salle", "dateHeureDebut"},
+ *      errorPath="salle",
+ *      message="Cette salle est déjà prise à cette heure-ci."
+ * )
+ * 
  */
 class Cours implements JsonSerializable
 {
