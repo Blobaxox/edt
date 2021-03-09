@@ -61,7 +61,8 @@ class Cours implements JsonSerializable
         'type' => $this->type,
         'dateHeureDebut' => $this->dateHeureDebut,
         'dateHeureFin' => $this->dateHeureFin,
-        'week' => $this->getWeek(),
+        'weekNumber' => $this->getWeek(),
+        'dayNumber' => $this->getDay(),
         'professeur' => $this->professeur,
         'matiere' => $this->matiere,
         'salle' => $this->salle,
@@ -144,8 +145,11 @@ class Cours implements JsonSerializable
     }
 
     public function getWeek(){
-      //return date("W",$this->dateHeureDebut);
-      return "vas te faire";
+      return $this->dateHeureDebut->format('W');
+    }
+
+    public function getDay(){
+      return $this->dateHeureDebut->format('z');
     }
 
 }
