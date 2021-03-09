@@ -37,15 +37,6 @@ class CoursController extends AbstractController
     }
 
     /**
-     * @Route("/day/{id}", name="showDay", methods={"GET"})
-     */
-    public function showDay(CoursRepository $repository): JsonResponse
-    {
-      $cours = $repository->findAll();
-      return $this->json($cours);
-    }
-
-    /**
      * @Route("/day/{day}", name="getCoursByDay", methods={"GET"})
      */
     public function getCoursByDay(CoursRepository $repository, int $day) : JsonResponse
@@ -54,7 +45,7 @@ class CoursController extends AbstractController
         ['dayNumber' => $day]
       );
       return $this->json($cours);
-     
+
     }
 
 }
