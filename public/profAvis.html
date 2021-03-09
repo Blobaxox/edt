@@ -11,10 +11,13 @@
           <div class="row">
             <div class="col-3">
               <h1>Emploi du temps</h1>
-              <button  class="btn btn-primary mt-1"> << </button>
-              <h3>{{cours[0].date}}</h3>
-              <button  class="btn btn-primary mt-1"> >> </button>
-
+              <table>
+                <tr>
+                  <td><button  class="btn btn-primary mt-2"><<</button></td>
+                  <td><h3>{{cours[0].date}}</h3></span></td>
+                  <td><button  class="btn btn-primary mt-2">>></button></td>
+                </tr>
+              </table>
               <div class="card" v-for="cour in cours">
                 <div class="card-body">
                   <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
