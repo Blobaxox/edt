@@ -25,7 +25,7 @@ class Cours implements JsonSerializable
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\GreaterThan(propertyPath="dateHeureDebut", 
+     * @Assert\GreaterThan(propertyPath="dateHeureDebut",
      * message="La date de fin ne peut pas être inférieure à la date de début")
      */
     private $dateHeureFin;
@@ -50,6 +50,16 @@ class Cours implements JsonSerializable
      */
     private $salle;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $dayNumber;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $weekNumber;
+
 
     public function __toString()
     {
@@ -63,8 +73,8 @@ class Cours implements JsonSerializable
         'type' => $this->type,
         'dateHeureDebut' => $this->dateHeureDebut,
         'dateHeureFin' => $this->dateHeureFin,
-        'weekNumber' => $this->getWeek(),
-        'dayNumber' => $this->getDay(),
+        'weekNumber' => $this->weekNumber,
+        'dayNumber' => $this->dayNumber,
         'professeur' => $this->professeur,
         'matiere' => $this->matiere,
         'salle' => $this->salle,
@@ -84,6 +94,8 @@ class Cours implements JsonSerializable
     public function setDateHeureDebut(\DateTimeInterface $dateHeureDebut): self
     {
         $this->dateHeureDebut = $dateHeureDebut;
+        $this->weekNumber = $this->getWeek();
+        $this->dayNumber = $this->getDay();
         return $this;
     }
 
