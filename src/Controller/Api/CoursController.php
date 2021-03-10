@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Repository\CoursRepository;
 use App\Entity\Cours;
 /**
@@ -19,7 +20,7 @@ class CoursController extends AbstractController
     public function index(CoursRepository $repository): JsonResponse
     {
         $cours = $repository->findAll();
-        return $this->json($cours);
+        return $this->json($cours,200);
     }
     /**
      * @Route("/{id}", name="show", methods={"GET"})
@@ -33,19 +34,24 @@ class CoursController extends AbstractController
         ], 404);
       }
 
-      return $this->json($cours);
+      return $this->json($cours,200);
     }
 
     /**
-     * @Route("/day/{day}", name="getCoursByDay", methods={"GET"})
+     * @Route("/date/{date}", name="getCoursByDay", methods={"GET"})
      */
-    public function getCoursByDay(CoursRepository $repository, int $day) : JsonResponse
+    public function getCoursByDay(CoursRepository $repository, string $date) : JsonResponse
     {
       $cours = $repository->findBy(
-        ['dayNumber' => $day],
+        ['date' => $date],
         ['dateHeureDebut' => 'ASC']
       );
-      return $this->json($cours);
+
+      return $this->json([
+        'date' => $date,
+        'cours' => $cours,
+      ],200);
+
 
     }
 

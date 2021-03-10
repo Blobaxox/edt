@@ -15,12 +15,12 @@
                 <div>
                         <table>
                                 <tr>
-                                <td><button v-on:click="getCours(day-1)" class="btn btn-primary mt-2"><<</button></td>
+                                <td><button v-on:click="getCours(date,-1)" class="btn btn-primary mt-2"><<</button></td>
                                 <td >
-                                  <h3 v-if="cours[0]">{{cours[0].date}}</h3>
-                                  <h3 v-else>Il n'y a pas de cours prévus aujourd'hui.</h3>
+                                  <h3>{{date}}</h3>
+                                  <h3 v-if="!cours[0]">Il n'y a pas de cours prévus aujourd'hui.</h3>
                                 </td>
-                                <td><button v-on:click="getCours(day+1)" class="btn btn-primary mt-2">>></button></td>
+                                <td><button v-on:click="getCours(date,1)" class="btn btn-primary mt-2">>></button></td>
                                 </tr>
                             </table>
                             <div v-if="cours[0]" class="card" v-for="cour in cours">
@@ -140,7 +140,7 @@
                 errors: [],
                 mesAvis: [],
                 cours: [],
-                day: '',
+                date: null,
             },
 
             methods: {
@@ -201,11 +201,19 @@
                             console.log(error)
                         })
                 },
-                getCours: function(day = getDayOfTheYear()-1) {
-                  this.day = day
-                  axios.get(this.apiBase + '/cours/day/' + day)
+                getCours: function(date, add = 0) {
+
+                  if (date) {
+                    date = new Date(Date.parse(date))
+                  }else {
+                    date = new Date()
+                  }
+                  date.setDate(date.getDate()+add)
+                  
+                  axios.get(this.apiBase + '/cours/date/' + date.toISOString().slice(0, 10))
                     .then(response => {
-                      this.cours = response.data
+                      this.cours = response.data.cours
+                      this.date = response.data.date
                     })
                     .catch(error => {
                       console.log(error)

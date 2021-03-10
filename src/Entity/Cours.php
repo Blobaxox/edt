@@ -55,12 +55,12 @@ class Cours implements JsonSerializable
     /**
      * @ORM\Column(type="integer")
      */
-    private $dayNumber;
+    private $weekNumber;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
-    private $weekNumber;
+    private $date;
 
 
     public function __toString()
@@ -76,10 +76,9 @@ class Cours implements JsonSerializable
         'dateHeureDebut' => $this->dateHeureDebut,
         'heureDebut' => $this->getHeureDebut(),
         'heureFin' => $this->getHeureFin(),
-        'date' => $this->getDate(),
+        'date' => $this->date,
         'dateHeureFin' => $this->dateHeureFin,
         'weekNumber' => $this->weekNumber,
-        'dayNumber' => $this->dayNumber,
         'professeur' => $this->professeur,
         'matiere' => $this->matiere,
         'salle' => $this->salle,
@@ -100,7 +99,7 @@ class Cours implements JsonSerializable
     {
         $this->dateHeureDebut = $dateHeureDebut;
         $this->weekNumber = $this->getWeek();
-        $this->dayNumber = $this->getDay();
+        $this->date = $this->getDate();
         return $this;
     }
 
@@ -167,10 +166,6 @@ class Cours implements JsonSerializable
       return $this->dateHeureDebut->format('W');
     }
 
-    public function getDay(){
-      return $this->dateHeureDebut->format('z');
-    }
-
     public function getHeureDebut(){
       return $this->dateHeureDebut->format('H:i');
     }
@@ -180,7 +175,7 @@ class Cours implements JsonSerializable
     }
 
     public function getDate(){
-      return $this->dateHeureFin->format('Y-m-d');
+      return $this->dateHeureDebut->format('Y-m-d');
     }
 
     /**
