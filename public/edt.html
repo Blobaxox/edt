@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<style>
+.shadowbox {
+  width: 35em;
+  border: 1px solid #333;
+  box-shadow: 8px 8px 5px #444;
+  padding: 8px 12px;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.301), rgb(161, 161, 161) 40%, #ccc);
+}
+</style>
 <html>
 <head>
     <title>Note ton prof !</title>
@@ -40,25 +49,28 @@
                             </div>
                 </div>
             </div>
-            <div class="col-6">
-                <h2>Note ton prof !</h2>
-                <br/>
-                <div class="row">
-                    <div class="col-6" v-for="professeur in professeurs">
-                        <div class="card">
-                            <div class="card-body" :class="{'bg-light': professeur.id === professeurCourant?.id}">
-                                <h5 class="card-title">{{ professeur.prenom + ' ' + professeur.nom }}</h5>
+          
+                <div class="col-6">
+                    <div class="shadowbox">
+                    <h2>Note ton prof !</h2>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6" v-for="professeur in professeurs">
+                            <div class="card">
+                                <div class="card-body" :class="{'bg-light': professeur.id === professeurCourant?.id}">
+                                    <h5 class="card-title">{{ professeur.prenom + ' ' + professeur.nom }}</h5>
 
-                                <p class="card-text">
-                                    {{ professeur.email }}<br/>
+                                    <p class="card-text">
+                                        {{ professeur.email }}<br/>
 
-                                    <span v-for="matiere in professeur.matieres">
-                                        {{ matiere.titre }} ({{ matiere.reference }}),
-                                    </span>
-                                    <br>
+                                        <span v-for="matiere in professeur.matieres">
+                                            {{ matiere.titre }} ({{ matiere.reference }}),
+                                        </span>
+                                        <br>
 
-                                    <button v-on:click="getAvis(professeur)" :disabled="professeur.id === professeurCourant?.id" class="btn btn-primary mt-3">Afficher les avis</button>
-                                </p>
+                                        <button v-on:click="getAvis(professeur)" :disabled="professeur.id === professeurCourant?.id" class="btn btn-primary mt-3">Afficher les avis</button>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
