@@ -11,27 +11,36 @@
           <div class="row">
             <div class="col-3">
               <h1>Emploi du temps</h1>
-              <table>
-                <tr>
-                  <td><button  class="btn btn-primary mt-2"><<</button></td>
-                  <td><h3>{{cours[0].date}}</h3></span></td>
-                  <td><button  class="btn btn-primary mt-2">>></button></td>
-                </tr>
-              </table>
-              <div class="card" v-for="cour in cours">
-                <div class="card-body">
-                  <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
-                  <p class="card-body">
-                    <b>{{cour.heureDebut + ' - ' + cour.heureFin }}</b> <br>
-                    <i>
-                      Type : {{cour.type}} <br>
-                      Salle : {{cour.salle.numero}} <br>
-                      Professeur : {{cour.professeur.prenom + ' ' + cour.professeur.nom}}
-                    </i>
-                  </p>
-
+              
+                <div v-if="this.cours != null">
+                        <table>
+                                <tr>
+                                <td><button class="btn btn-primary mt-2"><<</button></td>
+                                <td><h3>{{cours[0].date}}</h3></span></td>
+                                <td><button class="btn btn-primary mt-2">>></button></td>
+                                </tr>
+                            </table>
+                            <div class="card" v-for="cour in cours">
+                                <div class="card-body">
+                                <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
+                                <p class="card-body">
+                                    <b>{{cour.heureDebut + ' - ' + cour.heureFin }}</b> <br>
+                                    <i>
+                                    Type : {{cour.type}} <br>
+                                    Salle : {{cour.salle.numero}} <br>
+                                    Professeur : {{cour.professeur.prenom + ' ' + cour.professeur.nom}}
+                                    </i>
+                                </p>
+                                </div>
+                            </div>
+                    
                 </div>
-              </div>
+                <div v-else>
+                        <p>
+                                Il n'y a pas de cours prévus aujourd'hui.
+                        </p>
+                   
+                </div>
             </div>
             <div class="col-6">
                 <h1>Note ton prof !</h1>
@@ -195,11 +204,11 @@
                             console.log(error)
                         })
                 },
-                getCours: function() {
-                  var day = getDayOfTheYear()-1;
+                getCours: function(day = getDayOfTheYear()-1) {
                   axios.get(this.apiBase + '/cours/day/' + day)
                     .then(response => {
                       this.cours = response.data
+                      console.log(response.data)
                     })
                     .catch(error => {
                       console.log(error)
