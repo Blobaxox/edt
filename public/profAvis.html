@@ -11,16 +11,19 @@
           <div class="row">
             <div class="col-3">
               <h1>Emploi du temps</h1>
-              
-                <div v-if="this.cours != null">
+
+                <div>
                         <table>
                                 <tr>
-                                <td><button class="btn btn-primary mt-2"><<</button></td>
-                                <td><h3>{{cours[0].date}}</h3></span></td>
-                                <td><button class="btn btn-primary mt-2">>></button></td>
+                                <td><button v-on:click="getCours(day-1)" class="btn btn-primary mt-2"><<</button></td>
+                                <td >
+                                  <h3 v-if="cours[0]">{{cours[0].date}}</h3>
+                                  <h3 v-else>Il n'y a pas de cours prévus aujourd'hui.</h3>
+                                </td>
+                                <td><button v-on:click="getCours(day+1)" class="btn btn-primary mt-2">>></button></td>
                                 </tr>
                             </table>
-                            <div class="card" v-for="cour in cours">
+                            <div v-if="cours[0]" class="card" v-for="cour in cours">
                                 <div class="card-body">
                                 <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
                                 <p class="card-body">
@@ -33,13 +36,6 @@
                                 </p>
                                 </div>
                             </div>
-                    
-                </div>
-                <div v-else>
-                        <p>
-                                Il n'y a pas de cours prévus aujourd'hui.
-                        </p>
-                   
                 </div>
             </div>
             <div class="col-6">
@@ -144,6 +140,7 @@
                 errors: [],
                 mesAvis: [],
                 cours: [],
+                day: '',
             },
 
             methods: {
@@ -205,10 +202,10 @@
                         })
                 },
                 getCours: function(day = getDayOfTheYear()-1) {
+                  this.day = day
                   axios.get(this.apiBase + '/cours/day/' + day)
                     .then(response => {
                       this.cours = response.data
-                      console.log(response.data)
                     })
                     .catch(error => {
                       console.log(error)
