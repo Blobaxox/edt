@@ -8,6 +8,23 @@
   padding: 14px 14px;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.301), rgb(161, 161, 161) 40%, #ccc);
 }
+
+.brightbox {
+  width: 35em;
+  border: 1px solid #333;
+  text-align: center;
+  box-shadow: 8px 8px 5px #444;
+  padding: 14px 14px;
+
+}
+
+.brightbox-2 {
+  width: 35em;
+  border: 1px solid #333;
+  box-shadow: 8px 8px 5px #444;
+  padding: 14px 14px;
+
+}
 </style>
 <html>
 <head>
@@ -53,7 +70,7 @@
             </div>
           
                 <div class="col-6">
-                    
+                <div class="brightbox">
                     <h2>Note ton prof !</h2>
                     <br/>
                     <div class="row">
@@ -80,6 +97,7 @@
             </div>
 
             <div v-if="professeurCourant" class="col-3">
+                <div class="brightbox-2">
                 <h3>Avis concernant <br/> {{ professeurCourant.prenom + ' ' + professeurCourant.nom }}</h3>
                 <br/>
                 <form v-on:submit.prevent="postAvis()" class="mb-5">
@@ -128,6 +146,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
