@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <style>
 .shadowbox {
-  width: 35em;
+  width: 23em;
   border: 1px solid #333;
+  text-align: center;
   box-shadow: 8px 8px 5px #444;
-  padding: 8px 12px;
+  padding: 14px 14px;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.301), rgb(161, 161, 161) 40%, #ccc);
 }
 </style>
@@ -19,39 +20,40 @@
     <div id="app">
           <div class="row">
             <div class="col-3">
-              <h2>Emploi du temps</h2>
+                <div class="shadowbox">
+                <h2>Emploi du temps</h2>
 
-                <div>
+                    <div>
                         <table>
-                                <tr>
-                                <td style="text-align: center"><button v-on:click="getCours(date,-1)" class="btn btn-primary mt-2"><</button></td>
+                            <tr>
+                                <td><button v-on:click="getCours(date,-1)" class="btn btn-primary mt-2"><</button></td>
                                 <td >
-                                  <h4>{{date}}</h4>
+                                    <h4>{{date}}</h4>
                                 </td>
                                 <td><button v-on:click="getCours(date,1)" class="btn btn-primary mt-2">></button></td>
-                                </tr>
-                            </table>
-                            <br/>
-                            <p v-if="!cours[0]">Il n'y a pas de cours prévus aujourd'hui.</p>
-
+                            </tr>
+                        </table>
+                        <br/>
+                        <p v-if="!cours[0]">Il n'y a pas de cours prévus aujourd'hui.</p>
                             <div v-if="cours[0]" class="card" v-for="cour in cours">
                                 <div class="card-body">
-                                <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
-                                <p class="card-body">
-                                    <b>{{cour.heureDebut + ' - ' + cour.heureFin }}</b> <br>
-                                    <i>
-                                    Type : {{cour.type}} <br>
-                                    Salle : {{cour.salle.numero}} <br>
-                                    Professeur : {{cour.professeur.prenom + ' ' + cour.professeur.nom}}
-                                    </i>
-                                </p>
+                                    <h5 class="card-title"><b>{{ cour.matiere.titre }}</b></h5>
+                                    <p class="card-body">
+                                        <b>{{cour.heureDebut + ' - ' + cour.heureFin }}</b> <br>
+                                        <i>
+                                        Type : {{cour.type}} <br>
+                                        Salle : {{cour.salle.numero}} <br>
+                                        Professeur : {{cour.professeur.prenom + ' ' + cour.professeur.nom}}
+                                        </i>
+                                    </p>
                                 </div>
                             </div>
+                    </div>
                 </div>
             </div>
           
                 <div class="col-6">
-                    <div class="shadowbox">
+                    
                     <h2>Note ton prof !</h2>
                     <br/>
                     <div class="row">
