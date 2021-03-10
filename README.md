@@ -10,18 +10,18 @@ Nous avons créer les entités Salle et Cours, ainsi que les Crud associés. Un 
 ## Api :
 
 Pour chaque cours l'API renvois :
-    - id
-    - type
-    - dateHeureDebut (datetime complet)
-    - heureDebut (format HH:MM)
-    - heureFin (format HH:MM)
-    - date (format AAAA-mm-jj)
-    - dateHeureFin (datetime complet)
-    - weekNumber (numéro de la semaine dans l'année)
-    - dayNumber (numéro du jour dans l'année)
-    - professeur
-    - matiere
-    - salle
+> id
+> type
+> dateHeureDebut (datetime complet)
+> heureDebut (format HH:MM)
+> heureFin (format HH:MM)
+> date (format AAAA-mm-jj)
+> dateHeureFin (datetime complet)
+> weekNumber (numéro de la semaine dans l'année)
+> dayNumber (numéro du jour dans l'année)
+> professeur
+> matiere
+> salle
 
 ### Renvois tous les cours
 
