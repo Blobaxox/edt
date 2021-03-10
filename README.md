@@ -8,7 +8,6 @@ Le serveur se trouve sur le port 8080
 Nous avons créer les entités Salle et Cours, ainsi que les Crud associés. Un cours a lieu dans une salle, une salle peut accueillir plusieurs cours. Un cours concerne une matière, et une matière peut avoir plusieurs cours. Un cours est donné par un professeur, et un professeur peut donner plusieurs cours.
 
 ## Api :
-
 Pour chaque cours l'API renvois :
 - id
 - type
@@ -18,7 +17,6 @@ Pour chaque cours l'API renvois :
 - date (format AAAA-mm-jj)
 - dateHeureFin (datetime complet)
 - weekNumber (numéro de la semaine dans l'année)
-- dayNumber (numéro du jour dans l'année)
 - professeur
 - matiere
 - salle
@@ -31,9 +29,10 @@ Route : /api/cours
 
 Route : /api/cours/{id}
 
-### Renvois tous les cours du jours numéro {day} de l'année
+### Renvois tous les cours du jours numéro {date} de l'année
 
-Route : /api/cours/day/{day}
+Route : /api/cours/date/{date}
+L'API renvois {date} avant la liste des cours
 
 ## Validators :
 
