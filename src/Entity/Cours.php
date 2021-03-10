@@ -6,20 +6,10 @@ use App\Repository\CoursRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use JsonSerializable;
 /**
  * @ORM\Entity(repositoryClass=CoursRepository::class)
- * @UniqueEntity(
- *      fields={"professeur", "dateHeureDebut"},
- *      errorPath="dateHeureDebut",
- *      message="Ce professeur a déjà un cours prévu à cette heure-ci."
- * )
- * @UniqueEntity(
- *      fields={"salle", "dateHeureDebut"},
- *      errorPath="salle",
- *      message="Cette salle est déjà prise à cette heure-ci."
- * )
- *
  */
 class Cours implements JsonSerializable
 {
@@ -191,6 +181,35 @@ class Cours implements JsonSerializable
 
     public function getDate(){
       return $this->dateHeureFin->format('Y-m-d');
+    }
+
+    /**
+    * @Assert\Callback
+    */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        $professeur = $this->getProfesseur();
+        $salle = $this->getSalle();
+        $dateHeureDebut = $this->getDateHeureDebut();
+        $dateHeureFin = $this->getDateHeureFin();
+
+        foreach ($this->professeur->getCours() as $autreCours) {
+            if ($dateHeureDebut > $autreCours->getDateHeureDebut() && $dateHeureDebut < $autreCours->getDateHeureFin() || $dateHeureFin > $autreCours->getDateHeureDebut() && $dateHeureFin < $autreCours->getDateHeureFin()) {
+              $context->buildViolation('Ce professeur a déjà un cours a ce moment là !')
+                  ->atPath('professeur')
+                  ->addViolation()
+              ;
+          }
+        }
+        foreach ($this->salle->getCours() as $autreCours) {
+          if($dateHeureDebut > $autreCours->getDateHeureDebut() && $dateHeureDebut < $autreCours->getDateHeureFin() || $dateHeureFin > $autreCours->getDateHeureDebut() && $dateHeureFin < $autreCours->getDateHeureFin()) {
+            $context->buildViolation('Cette salle est déjà prise par un autre cours !')
+                ->atPath('salle')
+                ->addViolation()
+            ;
+          }
+        }
+
     }
 
 
