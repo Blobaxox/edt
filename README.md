@@ -1,14 +1,28 @@
 # edt
-projet web avancé
+<!-- PROJET WEB AVANCE -->
 
-validators: 
-- Nous avons cherché une solution pour qu'un professeur ne puisse pas être ajouté à deux cours le même jour à la même heure, et pour qu'une salle ne puisse pas être prise par deux cours à la même heure. Cette condition fonctionne mais uniquement si l'on met la même heure de début (par exemple, si un prof a un cours entre 10h et 12h, si l'on rajoute un cours le même jour qui commence à 10h pour ce même professeur, un message d'erreur va s'afficher, en revanche si le cours ne commence pas à la même heure mais est situé entre 10h et 12h, l'erreur ne va pas être prise en compte)
-- Le validator permettant que la dateHeureDebut soit antérieure à la dateHeureFin fonctionne 
+Le serveur se trouve sur le port 8080
 
-- Pour ajouter un cours, il faut que : 
+<!-- Base de données : -->
+
+Nous avons créer les entités Salle et Cours, ainsi que les Crud associés. Un cours a lieu dans une salle, une salle peut accueillir plusieurs cours. Un cours concerne une matière, et une matière peut avoir plusieurs cours. Un cours est donné par un professeur, et un professeur peut donner plusieurs cours.
+
+<!-- Api : -->
+
+
+<!-- Validators :  -->
+
+Pour ajouter un cours, il faut que : 
   Le professeur n'ait pas un autre cours en même temps
-  Le date de début du cours doit être antérieure à la date de fin
+  La date de début du cours doit être antérieure à la date de fin
   La salle ne soit pas déjà utilisée par un autre cours
-  Le professeur, la salle, et la matière existent 
+  Le professeur, la salle, et la matière doivent exister
+
+Nous avons sacrément galéré pour ces validators
+
+<!-- Intégration des avis de professeurs dans l'edt: -->
+
+Nous avons fini par réussir à afficher les cours en fonction des jours ainsi que les avis sur les professeurs sur la même page. Nous avons eu quelques difficultés pour gérer l'exception d'afficher un jour sans cours mais nous avons utiliser un v-if pour régler ce soucis.
+
 
   
