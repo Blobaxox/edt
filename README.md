@@ -1,9 +1,20 @@
 # edt
-## PROJET WEB AVANCE
+## Installation
 
-Le serveur se trouve sur le port 8080
+récuperer et dézipper le projet.
+
+Exécuter dans un terminal la commande composer install pour installer les dépendances du projet.
+Créer un fichier .env.local à partir du fichier .env et le remplir pour connecter le projet à une base de données.
+Exécuter dans un terminal la commande php bin/console doctrine:database:create pour créer la base de données.
+Exécuter dans un terminal la commande php bin/console doctrine:migrations:migrate pour importer le schéma de la base de données.
+
+ouvrir le serveur sur le port 8080 (php -S localhost:8080)
+
+Aller sur la page http://localhost:8080/edt.html
 
 ## Base de données :
+
+Pour ajouter un cours dans la base de données aller sur la page http://localhost:8080/admin (attention sur Firefox les champs de date ne s'affiche pas correctement, préferer Chrome ou Edge)
 
 Nous avons créer les entités Salle et Cours, ainsi que les Crud associés. Un cours a lieu dans une salle, une salle peut accueillir plusieurs cours. Un cours concerne une matière, et une matière peut avoir plusieurs cours. Un cours est donné par un professeur, et un professeur peut donner plusieurs cours.
 
