@@ -1,22 +1,26 @@
 # edt
 ## Installation
 
-récuperer et dézipper le projet.
+Récuperer et dézipper le projet.
 
 Exécuter dans un terminal la commande composer install pour installer les dépendances du projet.
 Créer un fichier .env.local à partir du fichier .env et le remplir pour connecter le projet à une base de données.
 Exécuter dans un terminal la commande php bin/console doctrine:database:create pour créer la base de données.
 Exécuter dans un terminal la commande php bin/console doctrine:migrations:migrate pour importer le schéma de la base de données.
 
-ouvrir le serveur sur le port 8080 (php -S localhost:8080)
+Ouvrir le serveur sur le port 8080 (php -S localhost:8080)
 
 Aller sur la page http://localhost:8080/edt.html
 
 ## Base de données :
 
-Pour ajouter un cours dans la base de données aller sur la page http://localhost:8080/admin (attention sur Firefox les champs de date ne s'affiche pas correctement, préferer Chrome ou Edge)
+Nous avons créer les entités Salle et Cours, ainsi que les Crud associés.
+Un cours a lieu dans une salle, une salle peut accueillir plusieurs cours (1 à la fois).
+Un cours concerne une matière, et une matière peut avoir plusieurs cours.
+Un cours est donné par un professeur, et un professeur peut donner plusieurs cours (1 à la fois).
 
-Nous avons créer les entités Salle et Cours, ainsi que les Crud associés. Un cours a lieu dans une salle, une salle peut accueillir plusieurs cours. Un cours concerne une matière, et une matière peut avoir plusieurs cours. Un cours est donné par un professeur, et un professeur peut donner plusieurs cours.
+Pour ajouter un cours dans la base de données aller sur la page http://localhost:8080/admin
+(attention! sur Firefox les champs de date ne s'affiche pas correctement, préferer Chrome ou Edge)
 
 ## Api :
 Pour chaque cours l'API renvois :
@@ -43,7 +47,8 @@ Route : /api/cours/{id}
 ### Renvois tous les cours du jours numéro {date} de l'année
 
 Route : /api/cours/date/{date}
-L'API renvois {date} avant la liste des cours
+{date} doit être de la forme AAAA-MM-JJ (avec les tirets)
+L'API renvois en plus la {date} fournie avant la liste des cours
 
 ## Validators :
 
@@ -52,8 +57,6 @@ Pour ajouter un cours, il faut que :
   La date de début du cours doit être antérieure à la date de fin
   La salle ne soit pas déjà utilisée par un autre cours
   Le professeur, la salle, et la matière doivent exister
-
-Nous avons sacrément galéré pour ces validators
 
 ## Intégration des avis de professeurs dans l'edt:
 
