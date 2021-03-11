@@ -4,25 +4,28 @@
   width: 23em;
   border: 1px solid #333;
   text-align: center;
-  align-content: center;
   box-shadow: 8px 8px 5px #444;
   padding: 14px 14px;
-  margin: 10px 14px;
-  background-image: linear-gradient(180deg, rgba(92, 92, 92, 0.808), rgb(85, 85, 85) 40%, rgb(139, 139, 139));
+  margin: 10px 25px;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.301), rgb(161, 161, 161) 40%, #ccc);
 }
 
 .brightbox {
   width: 35em;
   border: 1px solid #333;
   text-align: center;
-  box-shadow: 8px 8px 5px #444;
   padding: 14px 14px;
-  margin: 10px 40px;
-  align-content: center;
+  margin: 10px 25px;
 
 }
 
+.brightbox-2 {
+  width: 35em;
+  border: 1px solid #333;
+  padding: 14px 14px;
+  margin: 10px 25px;
 
+}
 </style>
 <html>
 <head>
@@ -34,13 +37,12 @@
 
     <div id="app">
           <div class="row">
-            <div class="col-sm"></div>
-            <div class="col-sm">
+            <div class="col-3">
                 <div class="shadowbox">
                 <h2>Emploi du temps</h2>
 
                     <div>
-                        <table style:align="center">
+                        <table>
                             <tr>
                                 <td><button v-on:click="getCours(date,-1)" class="btn btn-primary mt-2"><</button></td>
                                 <td >
@@ -64,14 +66,11 @@
                                     </p>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm"></div>
-        </div>
-            <br/>
-            <div class="row" >
-                <div class="col">
+          
+                <div class="col-6">
                 <div class="brightbox">
                     <h2>Note ton prof !</h2>
                     <br/>
@@ -97,10 +96,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
-            <div v-if="professeurCourant" class="col-6">
-                <div class="brightbox">
-                <h3>Avis concernant <br/> {{ professeurCourant.prenom + ' ' + professeurCourant.nom }}</h3>
+        </div>
+            <div class="row">
+            <div class="col-3"></div>
+            <div v-if="professeurCourant" class="col-3">
+                <div class="brightbox-2">
+                <h3>Avis concernant {{ professeurCourant.prenom + ' ' + professeurCourant.nom }}</h3>
                 <br/>
                 <form v-on:submit.prevent="postAvis()" class="mb-5">
                     <div class="form-group">
@@ -150,7 +151,6 @@
             </div>
         </div>
         </div>
-    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
